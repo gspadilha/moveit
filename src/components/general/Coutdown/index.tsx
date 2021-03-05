@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+import { CountdownContext } from '../../../contexts/CoutdownContextProvider';
 
 import {
   CountdownContainer,
@@ -6,35 +7,22 @@ import {
   CountdownSeparator,
   CountdownButtonStart,
   CountdownButtonStop,
+  CountdownButtonFinished,
 } from './styles';
 
-const INITIAL_TIME = 60 * 25;
-
 const CountDown: React.FC = () => {
-  const [time, setTime] = useState(INITIAL_TIME);
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    if (isActive && time > 0) {
-      setTimeout(() => {
-        setTime(currentValue => currentValue - 1);
-      }, 1000);
-    }
-  }, [isActive, time]);
-
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
+  const {
+    minutes,
+    seconds,
+    isActive,
+    hasFinished,
+    handleResetCountdown,
+    handleStartCountdown,
+  } = useContext(CountdownContext);
 
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
 
-  const handleStartCountdown = () => {
-    setIsActive(true);
-  };
-
-  const handleStopCountdown = () => {
-    setIsActive(false);
-  };
   return (
     <>
       <CountdownContainer>
@@ -49,14 +37,22 @@ const CountDown: React.FC = () => {
         </CountdownNumber>
       </CountdownContainer>
 
-      {!isActive ? (
-        <CountdownButtonStart type="button" onClick={handleStartCountdown}>
-          Iniciar um novo Ciclo
-        </CountdownButtonStart>
+      {hasFinished ? (
+        <CountdownButtonFinished disabled>
+          Ciclo encerrado
+        </CountdownButtonFinished>
       ) : (
-        <CountdownButtonStop type="button" onClick={handleStopCountdown}>
-          Abandonar Ciclo
-        </CountdownButtonStop>
+        <>
+          {isActive ? (
+            <CountdownButtonStop type="button" onClick={handleResetCountdown}>
+              Abandonar Ciclo
+            </CountdownButtonStop>
+          ) : (
+            <CountdownButtonStart type="button" onClick={handleStartCountdown}>
+              Iniciar um novo Ciclo
+            </CountdownButtonStart>
+          )}
+        </>
       )}
     </>
   );

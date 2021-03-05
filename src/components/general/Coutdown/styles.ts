@@ -84,3 +84,12 @@ export const CountdownButtonStop = styled.button`
     color: ${({ theme }) => getLodash(theme, `${theme.mode}.background`)};
   }
 `;
+
+export const CountdownButtonFinished = styled.button`
+  ${buttonStyle}
+
+  background: ${({ theme }) => getLodash(theme, `${theme.mode}.background`)};
+  color: ${({ theme }) => getLodash(theme, `${theme.mode}.text`)};
+
+  cursor: not-allowed;
+`;

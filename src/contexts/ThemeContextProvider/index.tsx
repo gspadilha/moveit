@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import { FC, createContext, ReactNode, useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../../styles';
 
@@ -12,9 +12,9 @@ interface IThemeContextDataProps {
 
 export const ThemeChangerContext = createContext({} as IThemeContextDataProps);
 
-export const ThemeContextProvider = ({
+export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({
   children,
-}: IThemeContextProviderProps) => {
+}) => {
   const [themeModeIsLight, setThemeModeIsLight] = useState(true);
   const [themeSelected, setThemeSelected] = useState(theme);
 
