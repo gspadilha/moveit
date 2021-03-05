@@ -25,7 +25,7 @@ export const CountdownContext = createContext(
   {} as ICoutdownContextProviderData,
 );
 
-const INITIAL_TIME = 60 * 0.1;
+const INITIAL_TIME = 60 * 0.05;
 let countdownTimeout: NodeJS.Timeout;
 
 export const CountdownContextProvider: FC<ICountdownContextProviderProps> = ({

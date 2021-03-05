@@ -5,7 +5,10 @@ import CompletedChallenges from '../components/general/CompletedChallenges';
 import CountDown from '../components/general/Coutdown';
 import ExperienceBar from '../components/general/ExperienceBar';
 import Perfil from '../components/general/Perfil';
+
+import { ChallengesContextProvider } from '../contexts/ChallengesContextProvider';
 import { CountdownContextProvider } from '../contexts/CoutdownContextProvider';
+import { IHomeProps } from '../interfaces/IHomeProps.interface';
 
 import {
   HomeContainer,
@@ -13,9 +16,17 @@ import {
   RightContainer,
 } from '../styles/pages/home.module';
 
-const Home: React.FC = () => {
+const Home: React.FC<IHomeProps> = ({
+  currentLevel,
+  currentExperience,
+  challengesCompleted,
+}) => {
   return (
-    <>
+    <ChallengesContextProvider
+      currentLevel={currentLevel}
+      currentExperience={currentExperience}
+      challengesCompleted={challengesCompleted}
+    >
       <PageTitle title="Início | Move.it" />
 
       <ExperienceBar />
@@ -32,7 +43,7 @@ const Home: React.FC = () => {
           </RightContainer>
         </CountdownContextProvider>
       </HomeContainer>
-    </>
+    </ChallengesContextProvider>
   );
 };
 
